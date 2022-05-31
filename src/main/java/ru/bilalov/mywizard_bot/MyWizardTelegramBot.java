@@ -6,7 +6,6 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-
 import java.io.IOException;
 import java.util.List;
 
@@ -33,16 +32,9 @@ public class MyWizardTelegramBot extends TelegramWebhookBot {
                     }
                 }
 
-            } catch (IOException e) {
+            } catch (IOException | IndexOutOfBoundsException e) {
                 e.printStackTrace();
             }
-//            long chat_id = update.getMessage().getChatId();
-//            try {
-//                execute(new SendMessage(chat_id, "Hi " + update.getMessage().getText()));
-//
-//            } catch (TelegramApiException e) {
-//                e.printStackTrace();
-//            }
         }
         return null;
     }
@@ -59,6 +51,7 @@ public class MyWizardTelegramBot extends TelegramWebhookBot {
             e.printStackTrace();
         }
     }
+
 
     @Override
     public String getBotUsername() {
