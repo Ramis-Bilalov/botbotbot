@@ -28,6 +28,7 @@ public class MyWizardTelegramBot extends TelegramWebhookBot {
                 List<Article> articleList = main.htmlParse();
                 for (int i = 0; i < articleList.size(); i++) {
                     if (articleList.get(i).getNum().contains(message.getText())) {
+
                         sendMsg(message, articleList.get(i).toString());
                     }
                 }
@@ -43,7 +44,6 @@ public class MyWizardTelegramBot extends TelegramWebhookBot {
         SendMessage sendMessage = new SendMessage();
         sendMessage.enableMarkdown(true);
         sendMessage.setChatId(message.getChatId().toString());
-//        sendMessage.setReplyToMessageId(message.getMessageId());
         sendMessage.setText(text);
         try {
             sendApiMethod(sendMessage);

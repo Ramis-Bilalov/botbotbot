@@ -42,16 +42,34 @@ public class Main {
             Element aElement = divElement.child(0);
 
             String tenderType = aElement.child(0).child(0).text();
-            String num = numb + " № " + aElement.child(0).child(1).child(0).child(0).child(0).text() + " (" + tenderType + ")";
+            String num = "";
+            try {
+                num = numb + " № " + aElement.child(0).child(1).child(0).child(0).child(0).text() + " (" + tenderType + ")";
+            } catch (IndexOutOfBoundsException e) {
+                e.printStackTrace();
+            }
 
-            Element bElement = divElement.child(1);
-            String sum = money + " " + bElement.child(0).child(1).text();
+
+            String sum = "";
+            try {
+                Element bElement = divElement.child(1);
+                sum = money + " " + bElement.child(0).child(1).text();
+            } catch (IndexOutOfBoundsException e) {
+                sum = money + " Цены нет";
+                e.printStackTrace();
+            }
+
             String title = name + " " + aElement.child(1).child(0).child(1).text();
 
+
             String date = "Заявки не подаются!!!";
-            if(!tenderType.contains("223-ФЗ Закупка у единственного поставщика (подрядчика, исполнителя)")) {
-                Element dElement = divElement.child(1);
-                date = dateZ + " Подача заявок до: " + dElement.child(1).child(2).text();
+            try {
+                if(!tenderType.contains("223-ФЗ Закупка у единственного поставщика (подрядчика, исполнителя)")) {
+                    Element dElement = divElement.child(1);
+                    date = dateZ + " Подача заявок до: " + dElement.child(1).child(2).text();
+                }
+            } catch (IndexOutOfBoundsException e) {
+                e.printStackTrace();
             }
 
             Element cElement = divElement.child(0);
@@ -78,11 +96,7 @@ public class Main {
                 e.printStackTrace();
             }
 
-
-
-
-
-            articleList.add(new Article(num, sum, title, company, date));
+            articleList.add(new Article(num, sum, title, company, date, url));
         });
 
         return articleList;
@@ -97,12 +111,23 @@ class Article {
     private String sum;         // стоимость
     private String date;        // дата окончания подачи заявок
 
-    public Article(String num, String sum, String title, String company, String date) {
+    private String url;
+
+    public Article(String num, String sum, String title, String company, String date, String url) {
         this.num = num;
         this.sum = sum;
         this.title = title;
         this.company = company;
         this.date = date;
+        this.url = url;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getDate() {
@@ -147,6 +172,6 @@ class Article {
 
     @Override
     public String toString() {
-        return num + "\n" + sum + "\n" + title + "\n" + company + "\n" + date;
+        return num + "\n" + sum + "\n" + title + "\n" + company + "\n" + date + "\n" + url;
     }
 }
