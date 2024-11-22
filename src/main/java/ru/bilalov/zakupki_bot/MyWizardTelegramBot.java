@@ -1,4 +1,4 @@
-package ru.bilalov.mywizard_bot;
+package ru.bilalov.zakupki_bot;
 
 import org.telegram.telegrambots.bots.TelegramWebhookBot;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
@@ -25,11 +25,11 @@ public class MyWizardTelegramBot extends TelegramWebhookBot {
             try {
                 Main main = new Main();
                 main.setNumber(message.getText());
-                List<Article> articleList = main.htmlParse();
-                for (int i = 0; i < articleList.size(); i++) {
-                    if (articleList.get(i).getNum().contains(message.getText())) {
+                List<Tender> tenderList = main.htmlParse();
+                for (int i = 0; i < ((List<?>) tenderList).size(); i++) {
+                    if (tenderList.get(i).getNum().contains(message.getText())) {
 
-                        sendMsg(message, articleList.get(i).toString());
+                        sendMsg(message, tenderList.get(i).toString());
                     }
                 }
 

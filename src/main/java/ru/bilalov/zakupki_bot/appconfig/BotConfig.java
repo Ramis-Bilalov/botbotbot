@@ -1,11 +1,11 @@
-package ru.bilalov.mywizard_bot.appconfig;
+package ru.bilalov.zakupki_bot.appconfig;
 
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import ru.bilalov.mywizard_bot.MyWizardTelegramBot;
+import ru.bilalov.zakupki_bot.MyWizardTelegramBot;
 
 @Getter
 @Setter

@@ -1,4 +1,4 @@
-package ru.bilalov.mywizard_bot;
+package ru.bilalov.zakupki_bot;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

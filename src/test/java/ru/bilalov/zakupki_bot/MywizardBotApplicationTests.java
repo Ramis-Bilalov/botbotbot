@@ -1,4 +1,4 @@
-package ru.bilalov.mywizard_bot;
+package ru.bilalov.zakupki_bot;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

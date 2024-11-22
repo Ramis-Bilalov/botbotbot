@@ -1,4 +1,4 @@
-package ru.bilalov.mywizard_bot;
+package ru.bilalov.zakupki_bot;
 
 import com.vdurmont.emoji.EmojiParser;
 import org.jsoup.Jsoup;
@@ -18,10 +18,10 @@ public class Main {
         this.number = number;
     }
 
-    public List<Article> htmlParse() throws IOException {
+    public List<Tender> htmlParse() throws IOException {
         noticeInfoId = null;
 
-        List<Article> articleList = new ArrayList<>();
+        List<Tender> tenderList = new ArrayList<>();
         String numb = EmojiParser.parseToUnicode(":black_large_square:");
         String dateZ = EmojiParser.parseToUnicode(":watch:");
         String organization = EmojiParser.parseToUnicode(":detective:");
@@ -64,7 +64,7 @@ public class Main {
 
             String date = "Заявки не подаются!!!";
             try {
-                if(!tenderType.contains("223-ФЗ Закупка у единственного поставщика (подрядчика, исполнителя)")) {
+                if (!tenderType.contains("223-ФЗ Закупка у единственного поставщика (подрядчика, исполнителя)")) {
                     Element dElement = divElement.child(1);
                     date = dateZ + " Подача заявок до: " + dElement.child(1).child(2).text();
                 }
@@ -79,31 +79,13 @@ public class Main {
             String url0 = element.attr("href");
             String[] split = url0.split("=");
             noticeInfoId = split[1];
-
-            String url4 = null;
-            String textUrl4 = null;
-            try {
-                String urlDoc = "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?noticeInfoId=" + noticeInfoId;
-                Document docUrl = Jsoup.connect(urlDoc).get();
-                Elements links = docUrl.select("a[href]");
-                for(Element link: links) {
-                    url4 = link.attr("href");
-                    textUrl4 = link.text();
-                    System.out.println("nlink : " + url4);
-                    System.out.println("text : " + textUrl4);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            articleList.add(new Article(num, sum, title, company, date, url));
+            String urlDoc = "https://zakupki.gov.ru/epz/order/notice/notice223/common-info.html?noticeInfoId=" + noticeInfoId;
+            tenderList.add(new Tender(num, sum, title, company, date, urlDoc));
         });
-
-        return articleList;
+        return tenderList;
     }
 }
-
-class Article {
+class Tender {
 
     private String num;         // номер закупки
     private String title;       // название закупки
@@ -113,7 +95,7 @@ class Article {
 
     private String url;
 
-    public Article(String num, String sum, String title, String company, String date, String url) {
+    public Tender(String num, String sum, String title, String company, String date, String url) {
         this.num = num;
         this.sum = sum;
         this.title = title;
